@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Gallery{% endblock %}
+
+{% block content %}
+    <h1>Your Images</h1>
+    <p>You have {{ count }} images</p>
+<div id="container">
+    <ol>
+    {% for obj in  object_list %}
+        <li><a href="#">{{obj.name}}</a> <br/>
+            {{obj.user.user.username}} - {{obj.commentsCount}} - Added {{ obj.timestamp|timesince }} ago</li>
+
+    {% endfor %}
+    </ol>
+</div>
+{% endblock %}

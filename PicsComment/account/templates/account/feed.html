@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Feed{% endblock %}
+
+{% block content %}
+    <h1>Your Feed</h1>
+    <div id="container">
+        <ol>
+            {% for obj in  object_list %}
+
+
+                <li><a href="#">{{ obj.photo.name }}</a></br>
+                    <div class="panel-group">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+          <span class="panel-title">  <span>{{ obj.photo.user.user.username }} </span>
+              <span><a data-toggle="collapse"
+                       href="#collapse{{ obj.index }}"> {{ obj.photo.commentsCount }} Comments</a></span>
+              <span style="float:right"> Updated {{ obj.photo.updated|timesince }} ago </span></h4>
+                            </div>
+                            <div id="collapse{{ obj.index }}" class="panel-collapse collapse">
+                                <ul class="list-group">
+                                    {% for comm in  obj.comments %}
+                                        <li class="list-group-item">
+                                            <span style="color:limegreen;float:left;">{{ comm.user.user.username }}</span>
+                                            <span style="color: darkolivegreen;font-weight: bold;padding-left: 10px"> {{ comm.text }} </span>
+                                            <small><span style="float:right;">{{ comm.updated|timesince }} ago</span>
+                                            </small>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                                <div class="panel-footer">
+                                    <form method="post"> {% csrf_token %}
+                                        <input type="textarea" name="text" placeholder="Add Comment here..." autofocus>
+                                        <input type="number" name="photo_id" value="{{ obj.photo.pk }}" hidden>
+                                        <input type="submit" name="comment" value="Comment">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
+
+        </ol>
+    </div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Images{% endblock %}
+
+{% block content %}
+    <h1>Add an  Image</h1>
+{% if form.errors.non_field_errors %}
+{{ form.errors.non_field_errors }}
+{% endif %}
+<form method='POST'> {% csrf_token %}
+	{{form.as_p}}
+    <input type='submit'>
+</form>
+
+{% endblock %}
